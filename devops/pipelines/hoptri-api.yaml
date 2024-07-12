@@ -1,0 +1,103 @@
+trigger:
+  branches:
+    include:
+      - refs/heads/master
+
+  paths:
+    include:
+      - src/*
+      - devops/pipelines/hoptri-api.yaml
+
+name: $(Date:yyyyMMdd).$(Rev:rr)-$(SourceBranchName)
+
+resources:
+  repositories:
+    - repository: azdo-pipeline-templates
+      type: git
+      name: DPoint/azdo-pipeline-templates
+      ref: refs/heads/master
+
+parameters:
+  - name: forcePublish
+    type: boolean
+    default: false
+
+variables:
+  - template: common-application-variables.yml
+
+  - name: allowPublish
+    value: or(and(ne(variables['Build.Reason'], 'PullRequest'), or(startsWith(variables['Build.SourceBranch'], 'refs/heads/releases/'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))), ${{parameters.forcePublish}})
+
+  - name: project
+    value: "hoptri-api"
+
+stages:
+  - template: pipeline-templates/build/dotnet-build-stage.yaml@azdo-pipeline-templates
+    parameters:
+      stageName: "ci"
+      projectPath: "src/$(${{ variables.project }})/$(${{ variables.project }}).csproj"
+      workingDirectory: "src/$(${{ variables.project }})/"
+      displayName: "CI"
+      netCoreVersion: "8.x"
+
+  - stage: prepare_image
+    displayName: "Prepare Image"
+    condition: and(succeeded(), eq(${{variables.allowPublish}}, true))
+    dependsOn: "ci"
+    pool:
+      name: Default
+    jobs:
+      - job: build_image
+        displayName: Build docker image
+        steps:
+          - task: Docker@2
+            displayName: "Login to GCR"
+            inputs:
+              command: login
+              containerRegistry: $(containerRegistry)
+
+          - task: Docker@2
+            displayName: Build an image
+            inputs:
+              command: build
+              dockerfile: "$(Build.SourcesDirectory)/src/$(${{ variables.project }})/Dockerfile"
+              buildContext: "$(Build.SourcesDirectory)/"
+              repository: "$(containerRegistryRepository)/$(project)"
+              tags: "$(Build.BuildNumber)"
+
+          - task: Docker@2
+            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+            displayName: Push image to $(containerRegistryRepository)/$(project)
+            inputs:
+              command: push
+              buildContext: "$(Build.SourcesDirectory)/"
+              repository: "$(containerRegistryRepository)/$(project)"
+              tags: "$(Build.BuildNumber)"
+
+  - stage: development
+    displayName: "DEV"
+    condition: and(succeeded(), eq(${{variables.allowPublish}}, true))
+    dependsOn: "prepare_image"
+    pool:
+      name: Default
+    jobs:
+      - deployment: deploy
+        displayName: Deploy
+        environment: "development"
+        timeoutInMinutes: 15
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: SSH@0
+                  inputs:
+                    sshEndpoint: "hoptri-dev-vm-01"
+                    runOptions: "inline"
+                    inline: |
+                      # Commands to run on the Ubuntu server
+                      docker stop hoptri-api || true
+                      docker rm hoptri-api || true
+                      docker pull $(containerRegistryDomain)/$(containerRegistryRepository)/$(project):$(Build.BuildNumber)
+                      docker run -d -p 80:8080 --name hoptri-api $(containerRegistryDomain)/$(containerRegistryRepository)/$(project):$(Build.BuildNumber)
+
+                    readyTimeout: "20000"

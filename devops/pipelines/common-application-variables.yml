@@ -1,0 +1,12 @@
+variables:
+  - name: containerRegistry
+    value: "dpoint-vcr-shared"
+
+  - name: containerRegistryDomain
+    value: "vcr.vngcloud.vn"
+
+  - name: containerRegistryRepository
+    value: "107198-dpoint-vcr-shared-01"
+
+  - name: hoptri-api
+    value: "API"
