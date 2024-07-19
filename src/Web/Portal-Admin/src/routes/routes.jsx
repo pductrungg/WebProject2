@@ -2,7 +2,6 @@ import Dashboard from 'pages/dashboard/Dashboard';
 import CategoryList from 'pages/category/CategoryList';
 import CategoryAction from 'pages/category/CategoryAction';
 import AddCategory from 'pages/category/add';
-// import manageCategory from 'pages/category_manage/manageCategory';
 
 const ROUTES = [
   {path: '/dashboard', title: 'Trang chủ', element: Dashboard},

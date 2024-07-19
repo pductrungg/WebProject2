@@ -10,7 +10,6 @@ import SearchText from 'components/common/SearchText';
 // ---
 import {GetColumns} from './colunms';
 import DataTable from 'components/common/DataTable';
-import AddCategory from './add.jsx';
 
 
 const CategoryList = () => {
