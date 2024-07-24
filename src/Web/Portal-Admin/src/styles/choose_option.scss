@@ -20,6 +20,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   transition: width 0.3s ease;
+  color: #A19F9D;
 }
 
 @media (max-width: 900px) {
@@ -216,8 +217,12 @@ input[type="radio"]:checked + .custom-radio::after {
   color: black;
 }
 
-.button-secondary {
-  background-color: #4CAF50;
-  color: white;
-  border-color: #f0f0f0;
+.Toastify__toast--success {
+  background-color: #DFF6DD; /* Change background color */
+  border: 1px solid #2BC04C; /* Add border */
+  color: #2BC04C; /* Change text color */
+  width: 271px;
+  height: 38px;
+  padding: 8px 16px 8px 16px;
+  font-size: 14px;
 }
