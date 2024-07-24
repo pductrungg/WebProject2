@@ -9,7 +9,12 @@ export const GetColumns = () => {
       title: 'Thao tác',
       dataIndex: 'action',
       key: 'action',
-      render: () => <a>Delete</a>,
+      render: () => (
+        <div>
+            <a style={{marginRight:'6px'}}> Delete </a>
+            <a>Chinh sua</a>
+        </div>
+      )
     },
     {
       title: 'Ngày tạo',
