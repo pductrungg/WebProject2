@@ -4,17 +4,15 @@ import {Button, Col, Row, Space, Form, Modal, Input, notification} from 'antd';
 // ---LAYOUT
 import HeaderContentInner from 'components/layout/HeaderContentInner';
 import BodyContentInner from 'components/layout/BodyContentInner';
+import CustomSelection from './CustomSelection';
 import 'styles/choose_option.scss';
 import { HiOutlineChevronDown,HiOutlineChevronRight } from "react-icons/hi";
 import TextArea from 'antd/es/input/TextArea';
 import {toast} from 'react-toastify';
-import CustomTreeSelect from 'components/common/CustomTreeSelect';
-import { mockDataCategoryList } from './CategoryList';
-// import { Toast } from 'react-toastify/dist/components';
 
 
 
-const AddCategory = () => {
+const AdjustCategory = () => {
     const [form] = Form.useForm();
     const [categoryName, setCategoryName] = useState('');
     const [productCode, setProductCode] = useState('');
@@ -131,22 +129,6 @@ const AddCategory = () => {
         }, 2000);
     };
 
-    const getCategoryName = mockDataCategoryList.map((category) => ({
-        title: category.name,
-        value: category.name,
-        key: category.id,
-        children: category.children ? category.children.map((child) => ({
-          title: child.name,
-          value: child.name,
-          key: child.id,
-          children: child.children ? child.children.map((grandchild) => ({
-            title: grandchild.name,
-            value: grandchild.name,
-            key: grandchild.id,
-          })) : undefined,
-        })) : undefined,
-    }));
-
     return(
         <>
             <HeaderContentInner className='flex justify-between items-center'>
@@ -197,7 +179,7 @@ const AddCategory = () => {
                         />
                     </Form.Item>
 
-                    {/* <Form.Item
+                    <Form.Item
                         label="Chọn danh mục cha" 
                         name="SelectedCategory"
                         style={{marginBottom:'17px'}}
@@ -220,7 +202,7 @@ const AddCategory = () => {
                     }}
                     >
                     {getLabel()}
-                    <i className="fa fa-chevron-down"></i>
+                    <HiOutlineChevronDown />
                     </span>
                         </Button>
                         {showDropdown && (
@@ -236,11 +218,9 @@ const AddCategory = () => {
                                     }}
                                 >
                                     {level1.value === selectedCategory.level1 ? (
-                                    // <HiOutlineChevronDown style={{ marginRight: '8px' }} />
-                                    <i className="fa fa-chevron-down" style={{marginRight: '8px'}}></i>
+                                    <HiOutlineChevronDown style={{ marginRight: '8px' }} />
                                     ) : (
-                                    // <HiOutlineChevronRight style={{ marginRight: '8px' }} />
-                                    <i className="fa fa-chevron-right" style={{marginRight: '8px'}}></i>
+                                    <HiOutlineChevronRight style={{ marginRight: '8px' }} />
                                     )}
                                     <input
                                     type="radio"
@@ -322,18 +302,6 @@ const AddCategory = () => {
                             </div>
                         )}
                         </div>
-                    </Form.Item> */}
-                    
-                    <Form.Item label="Chọn danh mục cha" style={{marginBottom:'17px'}}>
-                        <CustomTreeSelect
-                            treeData={getCategoryName}
-                            onChange={handleSelect}
-                            placeholder="Chon danh muc cha"
-                            style={{
-                                width:'820px'
-                            }}
-                        />
-
                     </Form.Item>
 
                     <Form.Item
@@ -395,7 +363,7 @@ const AddCategory = () => {
 };
 
 
-export default AddCategory;
+export default AdjustCategory;
                     
 
 

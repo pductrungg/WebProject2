@@ -5,11 +5,14 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import 'styles/custom.scss';
+import 'styles/font-awesome/css/font-awesome.min.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Layout from 'components/layout/Layout';
 import Login from 'pages/login/Login';
 import {ConfigProvider} from 'antd';
 import {GlobalTokenConfigTheme, ComponentTokenConfigTheme} from 'styles/ConfigTheme';
 import useCheckLoggedIn from 'helpers/useCheckLoggedIn';
+import 'setimmediate';
 
 function App() {
   const isAuthorized = useCheckLoggedIn();

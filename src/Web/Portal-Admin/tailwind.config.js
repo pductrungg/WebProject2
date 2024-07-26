@@ -5,12 +5,12 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#D62828',
-          'dark-1': '#DA3E3E',
-          'dark-2': '#954444',
-          'dark-3': '#B63100',
-          'dark-4': '#C62828',
-          'light-1': 'rgba(214, 40, 40, 0.10)',
+          DEFAULT: '#15601C',
+          'light-1': '#339646',
+          'light-2': '#AAE794',
+          'light-3': '#D5F3CA',
+          'light-4': '#F3FBF0',
+          'dark-1': '#107C10',
         },
         default: '#343434',
         black: '#000000',
@@ -38,9 +38,21 @@ export default {
         overlay: 'rgba(0, 0, 0, 0.7)',
         overlay06: 'rgba(0, 0, 0, 0.2)',
         red: {
+          DEFAULT: '#FF0000',
           500: '#D62828',
           700: '#DA3E3E',
           900: '#954444',
+        },
+        green: {
+          DEFAULT: '#15601C',
+          'light-1': '#107C10',
+        },
+        blue: {
+          DEFAULT: '#2871B7',
+          'light-1': '#5791CD',
+          'light-2': '#9CC0E5',
+          'light-3': '#E7F1FA',
+          'light-4': '#F0F5FA',
         },
       },
       fontFamily: {

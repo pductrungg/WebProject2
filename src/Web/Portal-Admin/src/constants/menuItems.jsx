@@ -17,11 +17,11 @@ const MENU_ITEMS = [
     children: [
       {
         key: 'category',
-        label: <Link to="/category">Danh mục sản phẩm</Link>,
+        label: <Link to="/category">Quản lý danh mục</Link>,
       },
       {
-        key: 'productgroup',
-        label: <Link to="/productgroup">Nhóm sản phẩm</Link>,
+        key: 'product',
+        label: <Link to="/product">Quản lý sản phẩm</Link>,
       },
     ],
   },

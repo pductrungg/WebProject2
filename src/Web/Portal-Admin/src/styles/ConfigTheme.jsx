@@ -8,8 +8,8 @@ export const ComponentTokenConfigTheme = {
   Menu: {
     itemSelectedBg: '#D4F3CA',
   },
-  Button: {
-    defaultBorderColor: '#107C10',
-    defaultColor: '#15601c',
-  },
+  // Button: {
+  //   defaultBorderColor: '#107C10',
+  //   defaultColor: '#15601c',
+  // },
 };

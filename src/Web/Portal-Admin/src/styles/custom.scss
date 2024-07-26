@@ -1,1 +1,8 @@
 $primaryColor: #15601c;
+
+.custom-tree-select {
+  .ant-select-tree-node-content-wrapper {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -15,6 +15,7 @@ const DataTable = ({
   rowClassName = false,
   showSizeChanger = true,
   showTotal = null,
+  rowExpandable = false,
   ...props
 }) => {
   return (
@@ -22,10 +23,10 @@ const DataTable = ({
       columns={columns}
       dataSource={dataSource}
       // rowKey="id"
-      // scroll={{
-      //   y: `calc(71vh - ${heightTable}px)`,
-      //   x: '100%',
-      // }}
+      scroll={{
+        // y: `calc(71vh - ${heightTable}px)`,
+        x: 'max-content',
+      }}
       locale={{
         emptyText: <Empty description={<span>Không có dữ liệu</span>} />,
       }}
@@ -51,12 +52,12 @@ const DataTable = ({
         expandIcon: ({expanded, onExpand, record}) =>
           expanded ? (
             <RightOutlined onClick={(e) => onExpand(record, e)} className="mr-2" />
-          ) : (
+          ) : rowExpandable ? (
             <DownOutlined
               onClick={(e) => onExpand(record, e)}
               className={`mr-2 ${record?.children?.length > 0 ? 'visible' : 'invisible'}`}
             />
-          ),
+          ) : null,
       }}
       {...props}
     />

@@ -17,10 +17,16 @@ const NavBar = () => {
   const currentLocation = useLocation().pathname;
 
   const getRouteName = (pathname, routes) => {
-    const currentRoute = routes.find((route) => route.path === pathname);
+    const currentRoute = routes.find((route) =>
+      route.navPath ? route.navPath === pathname : route.path === pathname
+    );
 
     return currentRoute
-      ? {routeName: currentRoute.title, parentTitle: currentRoute.parentTitle}
+      ? {
+          routeName: currentRoute.title,
+          parentTitle: currentRoute.parentTitle,
+          navPath: currentRoute.navPath,
+        }
       : false;
   };
 
@@ -28,25 +34,27 @@ const NavBar = () => {
     const breadcrumbs = [];
     location.split('/').reduce((prev, curr, index, array) => {
       const currentPathname = `${prev}/${curr}`;
-      const {routeName, parentTitle} = getRouteName(currentPathname, ROUTES);
+      const {routeName, parentTitle, navPath} = getRouteName(currentPathname, ROUTES);
       if (parentTitle) {
         breadcrumbs.push({
           title: parentTitle,
         });
       }
+
       if (routeName) {
         breadcrumbs.push({
           pathname: currentPathname,
-          title: currentPathname ? (
-            <Link
-              to={currentPathname}
-              className={`${index + 1 === array.length ? 'font-bold' : ''}`}
-            >
-              {routeName}
-            </Link>
-          ) : (
-            routeName
-          ),
+          title:
+            currentPathname && !navPath ? (
+              <Link
+                to={currentPathname}
+                className={`${index + 1 === array.length ? 'font-bold' : ''}`}
+              >
+                {routeName}
+              </Link>
+            ) : (
+              routeName
+            ),
           active: index + 1 === array.length ? true : false,
         });
       }
