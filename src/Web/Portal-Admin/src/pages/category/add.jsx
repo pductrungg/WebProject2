@@ -132,17 +132,17 @@ const AddCategory = () => {
     };
 
     const getCategoryName = mockDataCategoryList.map((category) => ({
-        title: category.name,
-        value: category.name,
-        key: category.id,
+        label: category.name,
+        value: category.id,
+        // key: category.id,
         children: category.children ? category.children.map((child) => ({
-          title: child.name,
-          value: child.name,
-          key: child.id,
+          label: child.name,
+          value: child.id,
+        //   key: child.id,
           children: child.children ? child.children.map((grandchild) => ({
-            title: grandchild.name,
-            value: grandchild.name,
-            key: grandchild.id,
+            label: grandchild.name,
+            value: grandchild.id,
+            // key: grandchild.id,
           })) : undefined,
         })) : undefined,
     }));
